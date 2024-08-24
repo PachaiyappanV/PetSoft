@@ -17,7 +17,7 @@ const routes = [
 const AppHeader = () => {
   const activePathName = usePathname();
   return (
-    <header className="flex items-center justify-between border-b border-white/10 py-2">
+    <header className="flex items-center justify-between border-b border-white/20 py-2">
       <Logo />
       <nav>
         <ul className="flex gap-2 text-xs">
