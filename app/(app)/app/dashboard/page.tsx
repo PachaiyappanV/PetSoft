@@ -1,9 +1,19 @@
 import Branding from "@/components/branding";
 import ContentBlock from "@/components/content-block";
+import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
 import Stats from "@/components/stats";
 
-const page = () => {
+const page = async () => {
+  const response = await fetch(
+    "https://bytegrad.com/course-assets/projects/petsoft/api/pets"
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not fetch pets");
+  }
+
+  const pets = await response.json();
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">
@@ -18,7 +28,9 @@ const page = () => {
           <SearchForm />
         </div>
         <div className=" md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
-          <ContentBlock>petlist</ContentBlock>
+          <ContentBlock>
+            <PetList pets={pets} />
+          </ContentBlock>
         </div>
         <div className="md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full">
           <ContentBlock>petdetails</ContentBlock>
