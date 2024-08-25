@@ -1,10 +1,14 @@
-import { Pet } from "@/lib/types";
+"use client";
+import { PetContext } from "@/contexts/pet-context-provider";
 import Image from "next/image";
+import { useContext } from "react";
 
-type Props = {
-  pets: Pet[];
-};
-const PetList = ({ pets }: Props) => {
+const PetList = () => {
+  const context = useContext(PetContext);
+  if (!context) {
+    throw new Error("usePetContext must be used within a PetContextProvider");
+  }
+  const { pets } = context;
   return (
     <ul className="bg-white border-b border-black/[0.08]">
       {pets.map((pet) => (
