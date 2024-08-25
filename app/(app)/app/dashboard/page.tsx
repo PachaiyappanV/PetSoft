@@ -3,6 +3,7 @@ import ContentBlock from "@/components/content-block";
 import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
 import Stats from "@/components/stats";
+import { Pet } from "@/lib/types";
 
 const page = async () => {
   const response = await fetch(
@@ -13,7 +14,7 @@ const page = async () => {
     throw new Error("Could not fetch pets");
   }
 
-  const pets = await response.json();
+  const pets: Pet[] = await response.json();
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">

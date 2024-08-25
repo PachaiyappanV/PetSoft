@@ -1,6 +1,10 @@
+import { Pet } from "@/lib/types";
 import Image from "next/image";
 
-const PetList = ({ pets }) => {
+type Props = {
+  pets: Pet[];
+};
+const PetList = ({ pets }: Props) => {
   return (
     <ul className="bg-white border-b border-black/[0.08]">
       {pets.map((pet) => (
