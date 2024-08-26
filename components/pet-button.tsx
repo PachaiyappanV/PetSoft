@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Button } from "./ui/button";
 
 type Props = {
-  actionType: string;
+  actionType: "add" | "edit" | "checkout";
   children: ReactNode;
 };
 
@@ -11,7 +11,7 @@ const PetButton = ({ actionType, children }: Props) => {
   if (actionType === "add") {
     return (
       <Button size="icon">
-        <PlusIcon className="h-6 w-6" />
+        <PlusIcon className="h-5 w-5" />
       </Button>
     );
   }
