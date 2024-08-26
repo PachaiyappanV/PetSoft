@@ -12,6 +12,7 @@ type TPetContext = {
   selectedPetId: string | null;
   selectedPet: Pet | undefined;
   handleChangeSelectedPetId: (id: string) => void;
+  numberOfPets: number;
 };
 
 export const PetContext = createContext<TPetContext | null>(null);
@@ -22,6 +23,7 @@ const PetContextProvider = ({ children, data }: Props) => {
 
   // derived state
   const selectedPet = pets.find((pet) => pet.id === selectedPetId);
+  const numberOfPets = pets.length;
 
   //event handlers
   const handleChangeSelectedPetId = (id: string) => {
@@ -35,6 +37,7 @@ const PetContextProvider = ({ children, data }: Props) => {
         selectedPetId,
         selectedPet,
         handleChangeSelectedPetId,
+        numberOfPets,
       }}
     >
       {children}
