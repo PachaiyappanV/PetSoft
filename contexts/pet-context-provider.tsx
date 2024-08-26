@@ -10,6 +10,8 @@ type Props = {
 type TPetContext = {
   pets: Pet[];
   selectedPetId: string | null;
+  selectedPet: Pet | undefined;
+  handleChangeSelectedPetId: (id: string) => void;
 };
 
 export const PetContext = createContext<TPetContext | null>(null);
@@ -27,7 +29,14 @@ const PetContextProvider = ({ children, data }: Props) => {
   };
 
   return (
-    <PetContext.Provider value={{ pets, selectedPetId }}>
+    <PetContext.Provider
+      value={{
+        pets,
+        selectedPetId,
+        selectedPet,
+        handleChangeSelectedPetId,
+      }}
+    >
       {children}
     </PetContext.Provider>
   );

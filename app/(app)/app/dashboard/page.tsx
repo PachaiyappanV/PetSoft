@@ -1,5 +1,6 @@
 import Branding from "@/components/branding";
 import ContentBlock from "@/components/content-block";
+import PetDetails from "@/components/pet-details";
 import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
 import Stats from "@/components/stats";
@@ -24,7 +25,9 @@ const page = async () => {
           </ContentBlock>
         </div>
         <div className="md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full">
-          <ContentBlock>petdetails</ContentBlock>
+          <ContentBlock>
+            <PetDetails />
+          </ContentBlock>
         </div>
       </div>
     </main>
