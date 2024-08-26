@@ -16,7 +16,7 @@ const buttonVariants = cva(
         outline:
           "border border-zinc-200 bg-white shadow-sm hover:bg-zinc-100 hover:text-zinc-900 order-zinc-800 g-zinc-950 over:bg-zinc-800 over:text-zinc-50",
         secondary:
-          "bg-zinc-100 text-zinc-900 shadow-sm hover:bg-zinc-100/80 g-zinc-800 ext-zinc-50 over:bg-zinc-800/80",
+          "bg-zinc-200 text-zinc-900 shadow-sm hover:bg-zinc-100/80 g-zinc-800 ext-zinc-50 over:bg-zinc-800/80",
         ghost:
           "hover:bg-zinc-100 hover:text-zinc-900 over:bg-zinc-800 over:text-zinc-50",
         link: "text-zinc-900 underline-offset-4 hover:underline ext-zinc-50",
@@ -25,7 +25,7 @@ const buttonVariants = cva(
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        icon: "h-14 w-14",
       },
     },
     defaultVariants: {
