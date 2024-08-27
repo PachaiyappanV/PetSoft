@@ -7,9 +7,24 @@ type Props = {
   actionType: "add" | "edit";
 };
 
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+  const newPet = {
+    name: formData.get("name") as string,
+    ownerName: formData.get("ownerName") as string,
+    imageUrl:
+      (formData.get("imageUrl") as string) ||
+      "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
+    age: formData.get("age"),
+    notes: formData.get("notes"),
+  };
+};
+
 const PetForm = ({ actionType }: Props) => {
   return (
-    <form className="flex flex-col">
+    <form onSubmit={handleSubmit} className="flex flex-col">
       <div className="space-y-3">
         <div className="space-y-1">
           <Label htmlFor="name">Name</Label>
