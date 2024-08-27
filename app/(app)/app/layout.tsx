@@ -19,10 +19,11 @@ const Layout = async ({ children }: Props) => {
   }
 
   const data = await response.json();
+  console.log(data);
   return (
     <>
       <BackgroundPattern />
-      <div className="max-w-[1050px] flex flex-col mx-auto min-h-screen">
+      <div className="max-w-[1050px] flex flex-col mx-auto min-h-screen px-4">
         <AppHeader />
         <SearchContextProvider>
           <PetContextProvider data={data}>{children}</PetContextProvider>

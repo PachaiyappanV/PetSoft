@@ -4,10 +4,11 @@ import { Button } from "./ui/button";
 
 type Props = {
   actionType: "add" | "edit" | "checkout";
-  children: ReactNode;
+  children?: ReactNode;
+  onClick?: () => void;
 };
 
-const PetButton = ({ actionType, children }: Props) => {
+const PetButton = ({ actionType, children, onClick }: Props) => {
   if (actionType === "add") {
     return (
       <Button size="icon">
@@ -21,7 +22,11 @@ const PetButton = ({ actionType, children }: Props) => {
   }
 
   if (actionType === "checkout") {
-    return <Button variant="secondary">{children}</Button>;
+    return (
+      <Button variant="secondary" onClick={onClick}>
+        {children}
+      </Button>
+    );
   }
 };
 export default PetButton;

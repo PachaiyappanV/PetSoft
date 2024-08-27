@@ -4,7 +4,7 @@ import Image from "next/image";
 import PetButton from "./pet-button";
 
 export default function PetDetails() {
-  const { selectedPet } = usePetContext();
+  const { selectedPet, handleCheckout } = usePetContext();
   return (
     <section className="flex flex-col h-full w-full">
       {!selectedPet ? (
@@ -26,7 +26,12 @@ export default function PetDetails() {
             </h2>
             <div className="ml-auto space-x-2">
               <PetButton actionType="edit">Edit</PetButton>
-              <PetButton actionType="checkout">Checkout</PetButton>
+              <PetButton
+                actionType="checkout"
+                onClick={() => handleCheckout(selectedPet.id)}
+              >
+                Checkout
+              </PetButton>
             </div>
           </div>
 
