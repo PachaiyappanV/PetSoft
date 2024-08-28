@@ -1,3 +1,5 @@
+"use client";
+import { usePetContext } from "@/lib/hooks";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -5,24 +7,29 @@ import { Textarea } from "./ui/textarea";
 
 type Props = {
   actionType: "add" | "edit";
+  onFormSubmission: () => void;
 };
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+const PetForm = ({ actionType, onFormSubmission }: Props) => {
+  const { handleAddPet } = usePetContext();
 
-  const formData = new FormData(e.currentTarget);
-  const newPet = {
-    name: formData.get("name") as string,
-    ownerName: formData.get("ownerName") as string,
-    imageUrl:
-      (formData.get("imageUrl") as string) ||
-      "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-    age: formData.get("age"),
-    notes: formData.get("notes"),
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const newPet = {
+      name: formData.get("name") as string,
+      ownerName: formData.get("ownerName") as string,
+      imageUrl:
+        (formData.get("imageUrl") as string) ||
+        "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
+      age: Number(formData.get("age") as string),
+      notes: formData.get("notes") as string,
+    };
+    handleAddPet(newPet);
+    onFormSubmission();
   };
-};
 
-const PetForm = ({ actionType }: Props) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
       <div className="space-y-3">
