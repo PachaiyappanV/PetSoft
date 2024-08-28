@@ -15,6 +15,7 @@ type TPetContext = {
   numberOfPets: number;
   handleCheckout: (id: string) => void;
   handleAddPet: (newPet: Omit<Pet, "id">) => void;
+  handleEditPet: (petId: string, newPetData: Omit<Pet, "id">) => void;
 };
 
 export const PetContext = createContext<TPetContext | null>(null);
@@ -36,6 +37,20 @@ const PetContextProvider = ({ children, data }: Props) => {
     setPets((prev) => [...prev, { ...newPet, id: Date.now().toString() }]);
   };
 
+  const handleEditPet = (petId: string, newPetData: Omit<Pet, "id">) => {
+    setPets((prev) =>
+      prev.map((pet) => {
+        if (pet.id === petId) {
+          return {
+            id: petId,
+            ...newPetData,
+          };
+        }
+        return pet;
+      })
+    );
+  };
+
   const handleCheckout = (id: string) => {
     setPets((prev) => prev.filter((pet) => pet.id !== id));
     setSelectedPetId(null);
@@ -51,6 +66,7 @@ const PetContextProvider = ({ children, data }: Props) => {
         numberOfPets,
         handleCheckout,
         handleAddPet,
+        handleEditPet,
       }}
     >
       {children}
