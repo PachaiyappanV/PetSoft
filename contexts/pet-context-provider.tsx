@@ -20,8 +20,7 @@ type TPetContext = {
 
 export const PetContext = createContext<TPetContext | null>(null);
 
-const PetContextProvider = ({ children, data }: Props) => {
-  const [pets, setPets] = useState(data);
+const PetContextProvider = ({ children, data: pets }: Props) => {
   const [selectedPetId, setSelectedPetId] = useState<string | null>(null);
 
   // derived state
