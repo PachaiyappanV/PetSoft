@@ -1,6 +1,7 @@
 "use client";
 import { addPet } from "@/actions/actions";
 import { usePetContext } from "@/lib/hooks";
+import { toast } from "sonner";
 import PetFormButton from "./pet-form-button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -17,7 +18,10 @@ const PetForm = ({ actionType, onFormSubmission }: Props) => {
   return (
     <form
       action={async (formData) => {
-        await addPet(formData);
+        const error = await addPet(formData);
+        if (error) {
+          toast.warning(error.message);
+        }
         onFormSubmission();
       }}
       className="flex flex-col"
