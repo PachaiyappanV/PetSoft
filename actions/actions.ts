@@ -21,3 +21,25 @@ export const addPet = async (formData) => {
   }
   revalidatePath("/app", "layout");
 };
+
+export const editPet = async (petId, formData) => {
+  try {
+    await prisma.pet.update({
+      where: {
+        id: petId,
+      },
+      data: {
+        name: formData.get("name"),
+        ownerName: formData.get("ownerName"),
+        age: Number(formData.get("age")),
+        imageUrl:
+          formData.get("imageUrl") ||
+          "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
+        notes: formData.get("notes"),
+      },
+    });
+  } catch (err) {
+    return { message: "Could not update pet" };
+  }
+  revalidatePath("/app", "layout");
+};
