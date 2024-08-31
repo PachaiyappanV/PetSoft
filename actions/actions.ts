@@ -2,19 +2,12 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
-export const addPet = async (formData) => {
-  console.log(formData);
+export const addPet = async (pet) => {
+  await new Promise((resolve) => setTimeout(() => resolve("data"), 3000));
+  console.log(pet);
   try {
     await prisma.pet.create({
-      data: {
-        name: formData.get("name"),
-        ownerName: formData.get("ownerName"),
-        age: Number(formData.get("age")),
-        imageUrl:
-          formData.get("imageUrl") ||
-          "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-        notes: formData.get("notes"),
-      },
+      data: pet,
     });
   } catch (err) {
     return { message: "Could not add pet" };
@@ -22,21 +15,13 @@ export const addPet = async (formData) => {
   revalidatePath("/app", "layout");
 };
 
-export const editPet = async (petId, formData) => {
+export const editPet = async (petId, petData) => {
   try {
     await prisma.pet.update({
       where: {
         id: petId,
       },
-      data: {
-        name: formData.get("name"),
-        ownerName: formData.get("ownerName"),
-        age: Number(formData.get("age")),
-        imageUrl:
-          formData.get("imageUrl") ||
-          "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-        notes: formData.get("notes"),
-      },
+      data: petData,
     });
   } catch (err) {
     return { message: "Could not update pet" };

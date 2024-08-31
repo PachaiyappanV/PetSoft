@@ -1,7 +1,5 @@
 "use client";
-import { addPet, editPet } from "@/actions/actions";
 import { usePetContext } from "@/lib/hooks";
-import { toast } from "sonner";
 import PetFormButton from "./pet-form-button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -13,24 +11,27 @@ type Props = {
 };
 
 const PetForm = ({ actionType, onFormSubmission }: Props) => {
-  const { selectedPet, handleEditPet } = usePetContext();
+  const { selectedPet, handleEditPet, handleAddPet } = usePetContext();
 
   return (
     <form
       action={async (formData) => {
+        onFormSubmission();
+        const petData = {
+          name: formData.get("name") as string,
+          ownerName: formData.get("ownerName") as string,
+          imageUrl:
+            (formData.get("imageUrl") as string) ||
+            "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
+          age: Number(formData.get("age") as string),
+          notes: formData.get("notes") as string,
+        };
         if (actionType === "add") {
-          const error = await addPet(formData);
-          if (error) {
-            toast.warning(error.message);
-          }
+          handleAddPet(petData);
         }
         if (actionType === "edit") {
-          const error = await editPet(selectedPet?.id, formData);
-          if (error) {
-            toast.warning(error.message);
-          }
+          handleEditPet(selectedPet!.id, petData);
         }
-        onFormSubmission();
       }}
       className="flex flex-col"
     >
