@@ -1,4 +1,5 @@
 "use client";
+import { deletePet } from "@/actions/actions";
 import { usePetContext } from "@/lib/hooks";
 import Image from "next/image";
 import PetButton from "./pet-button";
@@ -28,7 +29,7 @@ export default function PetDetails() {
               <PetButton actionType="edit">Edit</PetButton>
               <PetButton
                 actionType="checkout"
-                onClick={() => handleCheckout(selectedPet.id)}
+                onClick={async () => await deletePet(selectedPet.id)}
               >
                 Checkout
               </PetButton>
