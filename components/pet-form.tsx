@@ -1,5 +1,6 @@
 "use client";
 import { usePetContext } from "@/lib/hooks";
+import { petFormSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,21 +16,6 @@ type Props = {
 
 const PetForm = ({ actionType, onFormSubmission }: Props) => {
   const { selectedPet, handleEditPet, handleAddPet } = usePetContext();
-
-  const petFormSchema = z.object({
-    name: z.string().trim().min(1, { message: "Name is required" }).max(100),
-    ownerName: z
-      .string()
-      .trim()
-      .min(1, { message: "Owner name is required" })
-      .max(100),
-    imageUrl: z.union([
-      z.literal(""),
-      z.string().trim().url({ message: "Image url must be a valid url" }),
-    ]),
-    age: z.coerce.number().int().positive().max(100),
-    notes: z.union([z.literal(""), z.string().trim().max(1000)]),
-  });
 
   type TPetForm = z.infer<typeof petFormSchema>;
   const {
