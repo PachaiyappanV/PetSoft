@@ -15,13 +15,14 @@ type Props = {
   actionType: "add" | "edit" | "checkout";
   children?: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
-const PetButton = ({ actionType, children, onClick }: Props) => {
+const PetButton = ({ actionType, children, onClick, disabled }: Props) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   if (actionType === "checkout") {
     return (
-      <Button variant="secondary" onClick={onClick}>
+      <Button variant="secondary" onClick={onClick} disabled={disabled}>
         {children}
       </Button>
     );
