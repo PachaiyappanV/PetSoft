@@ -34,6 +34,7 @@ const PetForm = ({ actionType, onFormSubmission }: Props) => {
   type TPetForm = z.infer<typeof petFormSchema>;
   const {
     register,
+    getValues,
     trigger,
     formState: { errors },
   } = useForm<TPetForm>({
@@ -48,15 +49,10 @@ const PetForm = ({ actionType, onFormSubmission }: Props) => {
           return;
         }
         onFormSubmission();
-        const petData = {
-          name: formData.get("name") as string,
-          ownerName: formData.get("ownerName") as string,
-          imageUrl:
-            (formData.get("imageUrl") as string) ||
-            "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-          age: Number(formData.get("age") as string),
-          notes: formData.get("notes") as string,
-        };
+        const petData = getValues();
+        petData.imageUrl =
+          petData.imageUrl ||
+          "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png";
         if (actionType === "add") {
           handleAddPet(petData);
         }
