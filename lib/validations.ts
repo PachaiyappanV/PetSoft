@@ -14,3 +14,5 @@ export const petFormSchema = z.object({
   age: z.coerce.number().int().positive().max(100),
   notes: z.union([z.literal(""), z.string().trim().max(1000)]),
 });
+
+export const petIdSchema = z.string().cuid();
