@@ -1,10 +1,10 @@
 "use server";
-import { auth, signIn, signOut } from "@/lib/auth";
+import { signIn, signOut } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { checkAuth } from "@/lib/server-utils";
 import { petFormSchema, petIdSchema } from "@/lib/validations";
 import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 //---- user actions ---
 
@@ -36,10 +36,7 @@ export const signUp = async (formData: FormData) => {
 //---- pet actions ----
 
 export const addPet = async (pet: unknown) => {
-  const session = await auth();
-  if (!session?.user) {
-    redirect("/login");
-  }
+  const session = await checkAuth();
 
   const validatedPet = petFormSchema.safeParse(pet);
   if (!validatedPet.success) {
@@ -83,14 +80,32 @@ export const editPet = async (petId: unknown, petData: unknown) => {
 };
 
 export const deletePet = async (petId: string) => {
+  //authentication
+  const session = await checkAuth();
+
+  //validation
   const validatedPetId = petIdSchema.safeParse(petId);
   if (!validatedPetId.success) {
     return { message: "Invalid pet data." };
   }
+
+  //authorization
+  const pet = await prisma.pet.findUnique({
+    where: {
+      id: validatedPetId.data,
+    },
+  });
+  if (!pet) {
+    return { message: "Pet not found." };
+  }
+  if (pet.userId !== session.user.id) {
+    return { message: "Not authorized" };
+  }
+
   try {
     await prisma.pet.delete({
       where: {
-        id: petId,
+        id: validatedPetId.data,
       },
     });
   } catch (err) {
