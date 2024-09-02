@@ -8,7 +8,8 @@ import { revalidatePath } from "next/cache";
 
 export const logIn = async (formData: FormData) => {
   const authData = Object.fromEntries(formData.entries());
-  await signIn("credentials", authData);
+
+  await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
 };
 
 export const logOut = async () => {

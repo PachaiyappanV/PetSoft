@@ -40,9 +40,14 @@ const authOptions: NextAuthConfig = {
       if (isLoggedIn && isTryingToAccessApp) {
         return true;
       }
-      if (!isTryingToAccessApp) {
+
+      if (isLoggedIn) {
+        return Response.redirect(new URL("/app/dashboard", request.nextUrl));
+      }
+      if (!isLoggedIn && !isTryingToAccessApp) {
         return true;
       }
+      return false;
     },
   },
 };

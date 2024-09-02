@@ -1,4 +1,3 @@
-"use client";
 import { logIn } from "@/actions/actions";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -18,7 +17,7 @@ const AuthForm = ({ type }: Props) => {
         <Label htmlFor="password">Password</Label>
         <Input id="password" type="password" name="password" />
       </div>
-      <Button type="submit">{type === "login" ? "Log In" : "Sign Up"}</Button>
+      <Button>{type === "login" ? "Log In" : "Sign Up"}</Button>
     </form>
   );
 };
