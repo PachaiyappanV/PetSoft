@@ -1,4 +1,4 @@
-import { logIn } from "@/actions/actions";
+import { logIn, signUp } from "@/actions/actions";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -8,7 +8,7 @@ type Props = {
 };
 const AuthForm = ({ type }: Props) => {
   return (
-    <form action={logIn}>
+    <form action={type === "login" ? logIn : signUp}>
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" name="email" />
