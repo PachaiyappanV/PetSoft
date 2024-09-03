@@ -48,16 +48,10 @@ const authOptions: NextAuthConfig = {
       if (isLoggedIn && isTryingToAccessApp) {
         return true;
       }
-
-      if (isLoggedIn && !isTryingToAccessApp) {
-        if (
-          request.nextUrl.pathname.includes("/login") ||
-          request.nextUrl.pathname.includes("/signup")
-        ) {
-          return Response.redirect(new URL("/payment", request.nextUrl));
-        }
-        return true;
+      if (isLoggedIn) {
+        return Response.redirect(new URL("/app/dashboard", request.nextUrl));
       }
+
       if (!isLoggedIn && !isTryingToAccessApp) {
         return true;
       }
@@ -65,7 +59,7 @@ const authOptions: NextAuthConfig = {
     },
     jwt: ({ token, user }) => {
       if (user) {
-        token.userId = user.id;
+        token.userId = user.id as string;
       }
       return token;
     },
