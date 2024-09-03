@@ -3,27 +3,47 @@ import { signIn, signOut } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { checkAuth } from "@/lib/server-utils";
 import { authSchema, petFormSchema, petIdSchema } from "@/lib/validations";
+import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 //---- user actions ---
 
-export const logIn = async (formData: unknown) => {
+export const logIn = async (prevState: unknown, formData: unknown) => {
   if (!(formData instanceof FormData)) {
     return {
       message: "Invalid form data.",
     };
   }
   const authData = Object.fromEntries(formData.entries());
+  try {
+    await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
+  } catch (err) {
+    if (err instanceof AuthError) {
+      switch (err.type) {
+        case "CredentialsSignin": {
+          return {
+            message: "Invalid credentials.",
+          };
+        }
+        default: {
+          return {
+            message: "Error. Could not sign in.",
+          };
+        }
+      }
+    }
 
-  await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
+    throw err; // nextjs redirects throws error, so we need to rethrow it
+  }
 };
 
 export const logOut = async () => {
   await signOut({ redirectTo: "/" });
 };
 
-export const signUp = async (formData: unknown) => {
+export const signUp = async (prevState: unknown, formData: unknown) => {
   // check if formData is a FormData type
   if (!(formData instanceof FormData)) {
     return {
@@ -45,14 +65,23 @@ export const signUp = async (formData: unknown) => {
   const { email, password } = validatedFormData.data;
 
   const hashedPassword = await bcrypt.hash(password as string, 10);
-
-  await prisma.user.create({
-    data: {
-      email: email as string,
-      password: hashedPassword,
-    },
-  });
-
+  try {
+    await prisma.user.create({
+      data: {
+        email: email as string,
+        password: hashedPassword,
+      },
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2002") {
+        return { message: "Email already exists" };
+      }
+    }
+    return {
+      message: "Could not create user.",
+    };
+  }
   await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
 };
 
