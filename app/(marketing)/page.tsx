@@ -10,10 +10,11 @@ export default function Home() {
      gap-10 px-10 "
     >
       <Image
-        src="https://bytegrad.com/course-assets/react-nextjs/petsoft-preview.png"
+        src="/petsoft.png"
         alt="Preview of PetSoft"
         width={519}
         height={472}
+        className="rounded"
       />
       <div>
         <Logo />

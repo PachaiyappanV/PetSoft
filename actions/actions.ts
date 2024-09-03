@@ -7,6 +7,8 @@ import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 //---- user actions ---
 
@@ -16,9 +18,9 @@ export const logIn = async (prevState: unknown, formData: unknown) => {
       message: "Invalid form data.",
     };
   }
-  const authData = Object.fromEntries(formData.entries());
+
   try {
-    await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
+    await signIn("credentials", formData);
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
@@ -82,7 +84,7 @@ export const signUp = async (prevState: unknown, formData: unknown) => {
       message: "Could not create user.",
     };
   }
-  await signIn("credentials", { ...authData, redirectTo: "/app/dashboard" });
+  await signIn("credentials", formData);
 };
 
 //---- pet actions ----
@@ -182,4 +184,27 @@ export const deletePet = async (petId: string) => {
     return { message: "Could not delete pet" };
   }
   revalidatePath("/app", "layout");
+};
+
+//-----payment actions
+
+export const createCheckoutSession = async () => {
+  //authentication check
+  console.log("aaaaaaa");
+  const session = await checkAuth();
+
+  //create checkout session
+  const checkoutSession = await stripe.checkout.sessions.create({
+    customer_email: session.user.email,
+    line_items: [
+      {
+        price: "price_1PusZGSACOwsGs77s7ZLLJNo",
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${process.env.CANONICAL_URL}/payment?success=true`,
+    cancel_url: `${process.env.CANONICAL_URL}/payment?cancelled=true`,
+  });
+  redirect(checkoutSession.url);
 };
