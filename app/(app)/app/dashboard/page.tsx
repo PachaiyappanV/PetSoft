@@ -6,9 +6,9 @@ import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
 import Stats from "@/components/stats";
 
-const page = async () => {
+const Page = async () => {
   return (
-    <main>
+    <main className="mb-5">
       <div className="flex items-center justify-between text-white py-8">
         <Branding />
         <Stats />
@@ -38,4 +38,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

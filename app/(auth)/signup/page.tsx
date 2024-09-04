@@ -2,7 +2,7 @@ import AuthForm from "@/components/auth-form";
 import H1 from "@/components/h1";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   return (
     <main>
       <H1 className="text-center mb-5">Sign Up</H1>
@@ -17,4 +17,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
