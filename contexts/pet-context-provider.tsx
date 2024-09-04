@@ -39,6 +39,8 @@ const PetContextProvider = ({ children, data }: Props) => {
           });
         case "delete":
           return state.filter((pet) => pet.id !== payload.id);
+        default:
+          return state;
       }
     }
   );
