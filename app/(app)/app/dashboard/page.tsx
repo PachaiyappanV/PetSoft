@@ -21,7 +21,7 @@ const Page = async () => {
           <SearchForm />
         </div>
         <div className=" relative md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
-          <ContentBlock className=" overflow-y-auto">
+          <ContentBlock className="overflow-y-auto max-h-[539px]">
             <PetList />
             <div className="absolute bottom-4 right-4">
               <PetButton actionType="add" />
