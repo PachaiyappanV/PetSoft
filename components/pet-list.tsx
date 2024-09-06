@@ -11,7 +11,7 @@ const PetList = () => {
     pet.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
-    <ul className="bg-white border-b border-black/10 max-h-[465px] overflow-y-auto pb-5 md:pb-0">
+    <ul className="bg-white">
       {filterdPets.map((pet) => (
         <li key={pet.id}>
           <button

@@ -25,7 +25,7 @@ export default function PetDetails() {
             <h2 className="text-3xl font-semibold leading-7 ml-5 ">
               {selectedPet?.name}
             </h2>
-            <div className="ml-auto space-x-2">
+            <div className="ml-auto space-x-2 gap-y-3 flex flex-col  sm:flex-row items-center justify-center">
               <PetButton actionType="edit">Edit</PetButton>
               <PetButton
                 actionType="checkout"
