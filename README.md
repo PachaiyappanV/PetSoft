@@ -12,11 +12,11 @@
 
 - **🔒 Secure Authentication with NextAuth**: Protect user data with NextAuth, offering flexible authentication strategies and robust session management to keep user information safe and secure.
 
-- **📊 Supercharged Backend with Prisma and PostgreSQL**: Harness the power of Prisma ORM with PostgreSQL to manage data efficiently and reliably, with query performance that scales effortlessly as your user base grows.
+- **📊 Supercharged Backend with Prisma and PostgreSQL**: Harness the power of Prisma ORM with PostgreSQL to manage data efficiently and reliably, with query performance that scales effortlessly as user base grows.
 
 - **🖇️ Efficient Server Actions**: Server actions simplify backend logic, reduce client-side overhead, and improve overall application performance by executing critical tasks directly on the server.
 
-- **🌐 Seamless Deployment on Vercel**: Deploy PetSoft on Vercel's edge network for unparalleled speed and global reach, making your app instantly accessible to users worldwide.
+- **🌐 Seamless Deployment on Vercel**: Deploy PetSoft on Vercel's edge network for unparalleled speed and global reach, making petsoft instantly accessible to users worldwide.
 
 ## 💡 **Getting Started in Minutes**
 
