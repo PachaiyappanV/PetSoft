@@ -10,7 +10,11 @@ const PetList = () => {
   const filterdPets = pets.filter((pet) =>
     pet.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  return (
+  return filterdPets.length === 0 ? (
+    <p className="text-black h-full w-full flex items-center justify-center font-medium">
+      Add a pet to your daycare
+    </p>
+  ) : (
     <ul className="bg-white">
       {filterdPets.map((pet) => (
         <li key={pet.id}>
